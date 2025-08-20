@@ -1,3 +1,22 @@
-form {
-    background-color: red;
+section {
+    background-color: black;
+}
+
+.form {
+    width: 400px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-header {
+    display: flex;
+}
+
+.title {
+    color: white;
+    font-size: 30px;
 }
