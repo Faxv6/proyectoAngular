@@ -1,0 +1,45 @@
+.aside {
+    background-color: rgb(140, 140, 140);
+    color: rgb(55, 55, 55);
+    height: 100%;
+    width: 5vh;
+}
+
+.flex-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.main-container {
+    min-height: 95vh;
+    margin-left: 85px;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 80px;
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+}
+
+
+
+.icon{
+    margin-top: 15px;
+}
+
+#logout-icon {
+    margin-top: 250px;
+}
+
+.body-text {
+    font-size: 18px;
+}

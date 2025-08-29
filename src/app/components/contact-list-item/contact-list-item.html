@@ -1,0 +1,14 @@
+<li [class.favourite]="contact().isFavourite === true">
+    <span>{{contact().nombre}}</span>
+    <span>{{contact().apellido}}</span>
+
+    <span>{{contact().direccion}}</span>
+    <span>{{contact().telefono}}</span>
+    <span>{{contact().email}}</span>
+    <span>{{contact().compania}}</span>
+    <span>-</span>
+    @if (contact().isFavourite === true){
+    ⭐
+    }
+    <span>{{contact().isFavourite}}</span>
+</li>
