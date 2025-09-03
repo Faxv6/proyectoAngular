@@ -29,15 +29,18 @@
     position: absolute;
     background-color: rgb(0, 0, 0);
 }
-
-
+.sidebar:hover {
+    width: 200px;
+    display: flex;
+    transition: 200ms;
+}
 
 .icon{
     margin-top: 15px;
 }
 
 #logout-icon {
-    margin-top: 250px;
+    margin-top: 375px;
 }
 
 .body-text {

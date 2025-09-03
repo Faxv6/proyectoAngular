@@ -4,10 +4,53 @@
     <span>Email</span>
     <span>Grupos</span>
     <span>Acciones</span>
+    <span><button (click)="contactService.createContact(newContactForm.value)">Crear contacto</button></span>
 
 </div>
 <ul>
-    @for (contacto of contactos; track $index) {
+    @for (contacto of contactService.contacts; track $index) {
     <app-contact-list-item [contact]="contacto"></app-contact-list-item>
+    <button (click)="contactService.deleteContact(contacto.id)">Borrar</button>
     }
 </ul>
+
+<form (ngSubmit)="contactService.createContact(newContactForm.value); newContactForm.resetForm()"
+    #newContactForm="ngForm">
+    <div>
+        <label for="firstName">Nombre</label>
+        <input id="firstName" name="firstName" type="text" ngModel required="true">
+    </div>
+    <div>
+        <label for="lastName">Apelldo</label>
+        <input id="lastName" name="lastName" type="text" ngModel required="true">
+    </div>
+    <div>
+        <label for="number">Teléfono</label>
+        <input id="number" name="number" type="text" ngModel required="true">
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" ngModel>
+    </div>
+    <div>
+        <label for="adress">Dirección</label>
+        <input id="adress" name="adress" type="text" ngModel>
+    </div>
+    <div>
+        <label for="group">Grupos</label>
+        <input id="group" name="group" type="text" ngModel>
+    </div>
+    <div>
+        <label for="company">Companía</label>
+        <input id="company" name="company" type="text" ngModel>
+    </div>
+    <div>
+        <label for="image">URL Imagen</label>
+        <input id="image" name="image" type="text" ngModel>
+    </div>
+    <div>
+        <label for="favourite"></label>
+        <input id="favourite" name="favourite" type="checkbox" ngModel>
+    </div>
+    <button [disabled]="newContactForm.invalid">+</button>
+</form>

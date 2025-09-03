@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ContactsService } from '../../services/contacts-service';
 
 @Component({
   selector: 'app-contact-details',
@@ -8,5 +9,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './contact-details.scss'
 })
 export class ContactDetails {
+  contactService = inject(ContactsService)
 
 }
