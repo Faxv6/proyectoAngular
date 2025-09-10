@@ -1,17 +1,25 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { ContactListItem } from '../../components/contact-list-item/contact-list-item';
 import { Contact, NewContact } from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-contacts-page',
-  imports: [RouterModule, ContactListItem, FormsModule],
+  imports: [RouterModule, ContactListItem, FormsModule, CommonModule],
   templateUrl: './contacts-page.html',
-  styleUrl: './contacts-page.scss'
+  styleUrl: './contacts-page.scss',
+  standalone: true,
+
 })
-export class ContactsPage {
+export class ContactsPage implements OnInit {
+  ngOnInit(): void {
+    this.contactService.getContacts();
+  }
+
 
   contactService = inject(ContactsService)
 
@@ -19,13 +27,13 @@ export class ContactsPage {
 
   createContact(form: any) {
     const nuevoContacto: NewContact = {
-      nombre: form.firstName,
-      apellido: form.lastName,
-      direccion: form.address,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      adress: form.address,
       email: form.email,
-      imagen: form.image,
-      telefono: form.number,
-      compania: form.company,
+      image: form.image,
+      number: form.number,
+      company: form.company,
       isFavourite: form.isFavorite
     }
 

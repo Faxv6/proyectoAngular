@@ -1,16 +1,27 @@
 <section class="login-section">
-    <form class="flex-column form" action="">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.form.value)" class="flex-column form">
         <img src="/logo-buggati.png" alt="logo" width="220" height="250">
-        <input type="text" id="user" class="input input-text" placeholder="Username">
-        <input type="password" id="password" class="input input-text" placeholder="Password">
-
-        <img src="" alt=""> <!--MODIIFCAR FORMULARIO A UNO MINIMALISTA-->
         <div>
-            <input routerLink="" class="subtitle boton" type="button" value="Iniciar sesión">
+            <input id="email" name="email" type="email" id="email" placeholder="Email" class="input input-text" ngModel
+                #email="ngModel" required="true" autocomplete="email">
+            @if (email.invalid && !email.pristine) {
+            <p class="error">Debe colocar un correo electrónico.</p>
+            }
         </div>
-        <div class="flex-header mg-t">
-            <p class="subtitle">No tenes cuenta?</p>
-            <a routerLink="/register" class="subtitle mg-l ">Registrate</a>
+        <div>
+            <input id="password" name="password" type="password" placeholder="Password" class="input input-text" ngModel
+                #password="ngModel" minlength="4" autocomplete="current-password">
+            @if (password.invalid && !password.pristine) {
+            <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+            }
         </div>
+        <button class="subtitle boton">
+            Iniciar sesión
+        </button>
+        @if (errorLogin) {
+        <p class="error">Datos de sesión incorrectos, intente nuevamente.</p>
+        }
+        <p class="subtitle">No tenes cuenta?</p>
+        <a routerLink="/register" class="subtitle mg-l">Registrate</a>
     </form>
 </section>

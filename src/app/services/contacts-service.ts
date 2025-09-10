@@ -1,48 +1,28 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Contact, NewContact } from '../interfaces/contact';
+import { AuthService } from './auth-service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  contacts: Contact[] = [
-    {
-      id: "0",
-      nombre: "Facu",
-      apellido: "Racca",
-      direccion: "viamonte",
-      telefono: "34133123",
-      imagen: "",
-      email: "facuracca@mail.com",
-      compania: "",
-      isFavourite: true
-    },
-    {
-      id: "1",
-      nombre: "Agus",
-      apellido: "Fussi",
-      direccion: "viamonte",
-      imagen: "",
-      telefono: "34133123",
-      email: "agusfussi@mail.com",
-      compania: ""
-
-    },
-    {
-      id: "2",
-      nombre: "Tomi",
-      apellido: "Rosciolino",
-      direccion: "calle 123",
-      imagen: "",
-      telefono: "34133123",
-      email: "tomiros@mail.com",
-      compania: ""
-    }
-  ]
+  authService = inject(AuthService);
+  contacts: Contact[] = []
 
 
 
-  getContacts() { }
+  async getContacts() {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts",
+      {
+        headers: {
+          Authorization: "Bearer " + this.authService.token,
+        }
+      }
+    )
+    const resJson: Contact[] = await res.json()
+    this.contacts = resJson;
+  }
   getContactById() { }
   createContact(nuevoContacto: NewContact) {
     const contacto: Contact = {
@@ -56,6 +36,6 @@ export class ContactsService {
   deleteContact(id: string) {
     this.contacts = this.contacts.filter(contact => contact.id !== id)
   }
-  seetFavourite() { }
+  setFavourite() { }
 
 }

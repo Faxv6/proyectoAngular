@@ -1,15 +1,31 @@
 <section class="login-section">
-    <form class="flex-column form" action="">
+    <form class="flex-column form" action="" #registerForm="ngForm" (ngSubmit)="register(registerForm.form.value)">
         <img id="logo" src="/logo-buggati.png" alt="" width="220" height="240">
-        <input type="text" id="firstName" class="input input-text" placeholder="First name">
-        <input type="password" id="lastName" class="input input-text" placeholder="Last Name">
-        <input type="text" id="user" class="input input-text" placeholder="User">
-        <input type="text" id="password" class="input input-text" placeholder="Password">
-        <input type="text" id="confirm-password" class="input input-text" placeholder="Confirm password">
-
-        <img src="" alt=""> <!--MODIIFCAR FORMULARIO A UNO MINIMALISTA-->
         <div>
-            <input class="subtitle boton" type="button" value="Registrar">
+            <input id="email" name="email" type="email" id="email" class="input input-text" placeholder="Email" ngModel
+                #email="ngModel" required="true" autocomplete="email">
+            @if (email.invalid && !email.pristine) {
+            <p class="error">Debe colocar un correo electrónico.</p>
+            }
         </div>
+        <div>
+            <input id="password" name="password" type="password" class="input input-text" ngModel #password="ngModel"
+                minlength="4" placeholder="Contraseña" autocomplete="new-password">
+            @if (password.invalid && !password.pristine) {
+            <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+            }
+        </div>
+        <div>
+            <input id="password2" name="password2" type="password" class="input input-text" ngModel #password2="ngModel"
+                minlength="4" placeholder="Repetir contraseña" autocomplete="new-password">
+            @if (password.invalid && !password.pristine) {
+            <p class="error">Debe colocar una contraseña de al menos 4 caracteres.</p>
+            }
+        </div>
+        @if (errorRegister) {
+        <p class="error">Error indeterminado, intente nuevamente.</p>
+        }
+        <p class="subtitle">Ya tenés cuenta? <a class="subtitle boton">Inicia sesion</a>
+        </p>
     </form>
 </section>

@@ -1,22 +1,22 @@
 export interface Contact {
     id: string,
-    nombre: string,
-    apellido: string,
-    direccion: string,
-    imagen: string,
-    telefono: string,
+    firstName: string,
+    lastName: string,
+    adress: string,
+    image: string,
+    number: string,
     email: string,
-    compania: string
+    company: string
     isFavourite?: boolean //Es opcional(?)
 }
 
 export interface NewContact {
-    nombre: string,
-    apellido: string,
-    direccion: string,
-    imagen: string,
-    telefono: string,
+    firstName: string,
+    lastName: string,
+    adress: string,
+    image: string,
+    number: string,
     email: string,
-    compania: string
+    company: string
     isFavourite?: boolean //Es opcional(?)
 }
