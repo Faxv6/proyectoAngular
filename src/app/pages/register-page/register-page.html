@@ -2,6 +2,16 @@
     <form class="flex-column form" action="" #registerForm="ngForm" (ngSubmit)="register(registerForm.form.value)">
         <img id="logo" src="/logo-buggati.png" alt="" width="220" height="240">
         <div>
+            <input id="firstName" name="firstName" type="firstName" id="firstName" class="input input-text"
+                placeholder="Nombre" ngModel #firstName="ngModel" required="false" autocomplete="firstName">
+
+        </div>
+        <div>
+            <input id="lastName" name="lastName" type="lastName" id="lastName" class="input input-text"
+                placeholder="Apellido" ngModel #lastName="ngModel" required="false" autocomplete="lastName">
+
+        </div>
+        <div>
             <input id="email" name="email" type="email" id="email" class="input input-text" placeholder="Email" ngModel
                 #email="ngModel" required="true" autocomplete="email">
             @if (email.invalid && !email.pristine) {
@@ -25,7 +35,8 @@
         @if (errorRegister) {
         <p class="error">Error indeterminado, intente nuevamente.</p>
         }
-        <p class="subtitle">Ya tenés cuenta? <a class="subtitle boton">Inicia sesion</a>
-        </p>
+        <button class="subtitle boton">
+            Registrarse
+        </button>
     </form>
 </section>

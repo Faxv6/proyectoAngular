@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
+import { UserService } from '../../services/users-services';
 
 
 @Component({
@@ -12,14 +13,22 @@ import { AuthService } from '../../services/auth-service';
 })
 export class RegisterPage {
   errorRegister = false;
-  auth = inject(AuthService);
-  
-  register(form: any) {
-    console.log(form);
+  user = inject(UserService);
+  isLoading = false;
+  router = inject(Router)
+
+  async register(form: any) {
     this.errorRegister = false;
-    if (!form.email || !form.password || !form.password2 || form.password !== form.password2) {
+    if (!form.email || !form.password || !form.password2 || !form.firstName || !form.lastName || form.password !== form.password2) {
       this.errorRegister = true;
       return
     }
+    this.isLoading = true;
+    const res = await this.user.register(form);
+    if (res.ok) {
+      this.router.navigate(["/login"])
+    }
+    this.isLoading = false;
+    this.errorRegister = true;
   }
 }

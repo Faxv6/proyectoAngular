@@ -13,7 +13,6 @@ export class AuthService {
   loggeado: boolean = false;
   router = inject(Router);
   token: null | string = localStorage.getItem("token");
-
   async login(loginData: any) {
     const res = await fetch("https://agenda-api.somee.com/api/authentication/authenticate",
       {
@@ -21,9 +20,9 @@ export class AuthService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData)
       }
-    )
+    );
     if (res.ok) {
-      this.router.navigate(["/"])
+      this.router.navigate(["/contacts"])
       this.token = await res.text();
       localStorage.setItem("token", this.token);
     }
