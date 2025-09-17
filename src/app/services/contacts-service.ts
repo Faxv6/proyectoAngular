@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Contact, NewContact } from '../interfaces/contact';
+import { Contact, NewContactT } from '../interfaces/contact';
 import { AuthService } from './auth-service';
 
 
@@ -24,13 +24,18 @@ export class ContactsService {
     this.contacts = resJson;
   }
   getContactById() { }
-  createContact(nuevoContacto: NewContact) {
-    const contacto: Contact = {
-
-      id: Math.random().toString(),
-      ...nuevoContacto
-    }
-    this.contacts.push(contacto)
+  async createContact(nuevoContacto: NewContactT) {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + this.authService.token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoContacto)
+      }
+    );
+    return res.ok;
   }
   editContact() { }
   deleteContact(id: string) {

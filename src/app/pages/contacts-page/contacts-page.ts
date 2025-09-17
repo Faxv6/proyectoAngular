@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { ContactListItem } from '../../components/contact-list-item/contact-list-item';
-import { Contact, NewContact } from '../../interfaces/contact';
+import { Contact} from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,28 +16,13 @@ import { CommonModule } from '@angular/common';
 
 })
 export class ContactsPage implements OnInit {
+
+newContactForm: any;
   ngOnInit(): void {
     this.contactService.getContacts();
   }
 
-
   contactService = inject(ContactsService)
 
   contactos: Contact[] = []
-
-  createContact(form: any) {
-    const nuevoContacto: NewContact = {
-      firstName: form.firstName,
-      lastName: form.lastName,
-      adress: form.address,
-      email: form.email,
-      image: form.image,
-      number: form.number,
-      company: form.company,
-      isFavourite: form.isFavorite
-    }
-
-    this.contactService.createContact(nuevoContacto)
-
-  }
 }

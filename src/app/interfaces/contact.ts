@@ -10,7 +10,7 @@ export interface Contact {
     isFavourite?: boolean //Es opcional(?)
 }
 
-export interface NewContact {
+export interface NewContactT {
     firstName: string,
     lastName: string,
     adress: string,
