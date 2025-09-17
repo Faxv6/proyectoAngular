@@ -6,7 +6,7 @@
         <a class="icon" routerLink="contact-details/:id"><img src="/usuario.png" alt="" width="40" height="40"></a>
     </div>
     <div>
-        <a routerLink="login"><img id="logout-icon" src="/log-out.png" width="40" height="40"></a>
+        <a routerLink="login" (click)="auth.logout()"><img id="logout-icon" src="/log-out.png" width="40" height="40"></a>
     </div>
 </aside>
 <main class="main-container">

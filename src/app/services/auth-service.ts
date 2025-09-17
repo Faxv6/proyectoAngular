@@ -30,6 +30,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.clear()
     this.token = null;
   }
 

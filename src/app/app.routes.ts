@@ -16,7 +16,8 @@ export const routes: Routes = [
 
     {
         path: "register",
-        component: RegisterPage
+        component: RegisterPage,
+        canActivate: [onlyPublicUserGuard]
     },
     {
         path: "",
