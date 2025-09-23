@@ -28,14 +28,38 @@
     width: 80px;
     position: absolute;
     background-color: rgb(0, 0, 0);
+    transition: width 200ms;
 }
+
 .sidebar:hover {
     width: 200px;
     display: flex;
-    transition: 200ms;
 }
 
-.icon{
+.icon {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    opacity: 0;
+    width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.3s, width 0.3s, margin-left 0.3s;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.sidebar:hover .label {
+    opacity: 1;
+    width: 100px; 
+    margin-left: 12px;
+}
+
+.icon {
     margin-top: 15px;
 }
 

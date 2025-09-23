@@ -1,0 +1,92 @@
+.contacts-table-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 700px;
+    overflow-y: auto;
+    border-radius: 20px;
+    background: #181818;
+}
+
+.contacts-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+.contacts-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #232323;
+}
+
+.contacts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.add-contact-btn {
+    background: linear-gradient(90deg, #007cf0, #00dfd8);
+    background-size: 200% 100%;
+    background-position: left;
+    color: #fff;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-position 0.4s;
+    width: 200px;
+}
+
+.add-contact-btn:hover {
+    background-position: right;
+}
+
+.contacts-table {
+    width: 99%;
+    background: #181818;
+    color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.contacts-table th {
+    padding: 2vh;
+    text-align: left;
+}
+
+.contacts-table td {
+    padding: 0.9vh;
+    text-align: left;
+}
+
+.contacts-table thead {
+    background: #232323;
+}
+
+.contacts-table tbody tr {
+    transition: background 0.2s;
+}
+
+.contacts-table tbody tr:hover {
+    background: #222e50;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #00dfd8;
+    font-size: 1.2em;
+    margin-right: 0.5em;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.action-btn:hover {
+    color: #007cf0;
+}
