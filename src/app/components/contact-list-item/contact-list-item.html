@@ -1,14 +1,14 @@
-<li [class.favourite]="contact().isFavourite === true">
+<li [class.favorite]="contact().isFavorite === true">
     <span>{{contact().firstName}}</span>
     <span>{{contact().lastName}}</span>
 
-    <span>{{contact().adress}}</span>
+    <span>{{contact().address}}</span>
     <span>{{contact().number}}</span>
     <span>{{contact().email}}</span>
     <span>{{contact().company}}</span>
     <span>-</span>
-    @if (contact().isFavourite === true){
+    @if (contact().isFavorite === true){
     ⭐
     }
-    <span>{{contact().isFavourite}}</span>
+    <span>{{contact().isFavorite}}</span>
 </li>

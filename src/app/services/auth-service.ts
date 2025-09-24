@@ -22,7 +22,7 @@ export class AuthService {
       }
     );
     if (res.ok) {
-      this.router.navigate(["/contacts"])
+      this.router.navigate([""])
       this.token = await res.text();
       localStorage.setItem("token", this.token);
     }

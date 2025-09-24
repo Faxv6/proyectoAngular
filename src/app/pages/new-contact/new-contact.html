@@ -1,76 +1,72 @@
 <div class="new-contact-page-bg">
-
     <div class="form-container">
-        <form (ngSubmit)="createContact(newContactForm.value)" #newContactForm="ngForm">
+        @if (idContacto()) {
+        <h2 class="">Editar contacto</h2>
+        } @else {
+        <h2>Nuevo contacto</h2>
+        }
+        <form (ngSubmit)="handleFormSubmission(newContactForm)" #newContactForm="ngForm">
             <div>
                 <label for="firstName">Nombre *</label>
                 <input id="firstName" name="firstName" type="text" ngModel required minlength="2" maxlength="30"
                     #firstName="ngModel">
-                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-                    <small *ngIf="firstName.errors?.['required']">El nombre es obligatorio.</small>
-                    <small *ngIf="firstName.errors?.['minlength']">Mínimo 2 caracteres.</small>
-                    <small *ngIf="firstName.errors?.['maxlength']">Máximo 30 caracteres.</small>
-                </div>
+                <small class="error" [class.visible]="firstName.invalid && (firstName.dirty || firstName.touched)">
+                    El nombre es obligatorio y debe tener entre 2 y 30 caracteres.
+                </small>
             </div>
             <div>
                 <label for="lastName">Apellido *</label>
                 <input id="lastName" name="lastName" type="text" ngModel required minlength="2" maxlength="30"
                     #lastName="ngModel">
-                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-                    <small *ngIf="lastName.errors?.['required']">El apellido es obligatorio.</small>
-                    <small *ngIf="lastName.errors?.['minlength']">Mínimo 2 caracteres.</small>
-                    <small *ngIf="lastName.errors?.['maxlength']">Máximo 30 caracteres.</small>
-                </div>
+                <small class="error" [class.visible]="lastName.invalid && (lastName.dirty || lastName.touched)">
+                    El apellido es obligatorio y debe tener entre 2 y 30 caracteres.
+                </small>
             </div>
             <div>
                 <label for="number">Teléfono *</label>
                 <input id="number" name="number" type="text" ngModel required pattern="^[0-9]{7,15}$" #number="ngModel">
-                <div *ngIf="number.invalid && (number.dirty || number.touched)">
-                    <small *ngIf="number.errors?.['required']">El teléfono es obligatorio.</small>
-                    <small *ngIf="number.errors?.['pattern']">Solo números (7-15 dígitos).</small>
-                </div>
+                <small class="error" [class.visible]="number.invalid && (number.dirty || number.touched)">
+                    Solo números (7-15 dígitos).
+                </small>
             </div>
             <div>
                 <label for="email">Email *</label>
                 <input id="email" name="email" type="email" ngModel required #email="ngModel">
-                <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                    <small *ngIf="email.errors?.['required']">El email es obligatorio.</small>
-                    <small *ngIf="email.errors?.['email']">Formato de email inválido.</small>
-                </div>
+                <small class="error" [class.visible]="email.invalid && (email.dirty || email.touched)">
+                    El email es obligatorio y debe tener formato válido.
+                </small>
             </div>
             <div>
-                <label for="adress">Dirección</label>
-                <input id="adress" name="adress" type="text" ngModel maxlength="50" #adress="ngModel">
-                <div *ngIf="adress.invalid && (adress.dirty || adress.touched)">
-                    <small *ngIf="adress.errors?.['maxlength']">Máximo 50 caracteres.</small>
-                </div>
+                <label for="address">Dirección</label>
+                <input id="address" name="address" type="text" ngModel maxlength="50" #address="ngModel">
+                <small class="error" [class.visible]="address.invalid && (address.dirty || address.touched)">
+                    Máximo 50 caracteres.
+                </small>
             </div>
             <div>
-                <label for="group">Grupos</label>
-                <input id="group" name="group" type="text" ngModel maxlength="30" #group="ngModel">
-                <div *ngIf="group.invalid && (group.dirty || group.touched)">
-                    <small *ngIf="group.errors?.['maxlength']">Máximo 30 caracteres.</small>
-                </div>
+                <label>Grupos</label>
+                <!-- Aquí puedes agregar un input si lo necesitas -->
             </div>
             <div>
                 <label for="company">Compañía</label>
                 <input id="company" name="company" type="text" ngModel maxlength="30" #company="ngModel">
-                <div *ngIf="company.invalid && (company.dirty || company.touched)">
-                    <small *ngIf="company.errors?.['maxlength']">Máximo 30 caracteres.</small>
-                </div>
+                <small class="error" [class.visible]="company.invalid && (company.dirty || company.touched)">
+                    Máximo 30 caracteres.
+                </small>
             </div>
             <div>
                 <label for="image">URL Imagen</label>
                 <input id="image" name="image" type="text" ngModel>
             </div>
             <div>
-                <label for="favourite">Favorito</label>
-                <input id="favourite" name="favourite" type="checkbox" ngModel>
+                <label for="favorite">Favorito</label>
+                <input id="favorite" name="favorite" type="checkbox" ngModel>
             </div>
-            <button type="submit" [disabled]="newContactForm.invalid" routerLink="/contacts">+</button>
-            @if (!contactoCreado) {
-            <p class="error">Ocurrió un error al crear el contacto, intente de nuevo.</p>
-            }
+            <button [disabled]="newContactForm.invalid" routerLink="/contacts">+</button>
+            <p class="error">{{newContactForm.valid}}</p>
+            <p class="error" [class.visible]="!contactoCreado">
+                Ocurrió un error al crear el contacto, intente de nuevo.
+            </p>
         </form>
     </div>
 </div>

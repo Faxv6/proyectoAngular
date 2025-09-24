@@ -23,7 +23,21 @@ export class ContactsService {
     const resJson: Contact[] = await res.json()
     this.contacts = resJson;
   }
-  getContactById() { }
+
+  async getContactById(id: string | number) {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts" + "/" + id,
+      {
+        headers: {
+          Authorization: "Bearer " + this.authService.token
+        },
+      }
+    );
+    if (!res.ok) return;
+    const resContact: Contact = await res.json();
+    return resContact
+
+  }
+
   async createContact(nuevoContacto: NewContactT) {
     const res = await fetch("https://agenda-api.somee.com/api/contacts",
       {
@@ -37,10 +51,57 @@ export class ContactsService {
     );
     return res.ok;
   }
-  editContact() { }
-  deleteContact(id: string) {
-    this.contacts = this.contacts.filter(contact => contact.id !== id)
-  }
-  setFavourite() { }
+  async editContact(contactoEditado: Contact) {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts" + "/" + contactoEditado.id,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + this.authService.token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactoEditado)
+      }
+    );
+    if (!res.ok) return;
 
+    this.contacts = this.contacts.map(contact => {
+      if (contact.id === contactoEditado.id) return contactoEditado;
+      return contact
+    })
+  }
+
+  async deleteContact(id: string | number) {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts" + "/" + id,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + this.authService.token
+        }
+      }
+    );
+    if (res.ok) {
+      this.contacts = this.contacts.filter(contact => contact.id !== id)
+      return true;
+    } else {
+      return false;
+    }
+  }
+  async setfavorite(id: string | number) {
+    const res = await fetch("https://agenda-api.somee.com/api/contacts" + "/" + id + "favorite",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + this.authService.token
+        },
+      }
+    );
+    if (!res.ok) return;
+    this.contacts = this.contacts.map(contact => {
+      if (contact.id === id) {
+        return { ...contact, isFavorite: !contact.isFavorite };
+      }
+      return contact;
+    });
+    return true
+  }
 }

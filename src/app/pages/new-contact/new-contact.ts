@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NewContactT } from '../../interfaces/contact';
+import { Component, inject, input, OnInit, viewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Contact, NewContactT } from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,27 +11,53 @@ import { Router } from '@angular/router';
   templateUrl: './new-contact.html',
   styleUrl: './new-contact.scss'
 })
-export class NewContactComponent {
+export class NewContactComponent implements OnInit {
   contactService = inject(ContactsService)
   router = inject(Router)
-  contactoCreado = true; // or true, depending on your logic
+  contactoCreado = true;
+  idContacto = input<number>();
+  contactoOriginal: Contact | undefined = undefined;
+  form = viewChild<NgForm>("newContactForm")
 
-
-  async createContact(form: any) {
+  async ngOnInit() {
+    if (this.idContacto()) {
+      this.contactoOriginal = await this.contactService.getContactById(this.idContacto()!);
+      this.form()?.setValue({
+        firstName: this.contactoOriginal!.firstName,
+        lastName: this.contactoOriginal!.lastName,
+        address: this.contactoOriginal!.address,
+        email: this.contactoOriginal!.email,
+        image: this.contactoOriginal!.image,
+        number: this.contactoOriginal!.number,
+        company: this.contactoOriginal!.company,
+        favorite: this.contactoOriginal!.isFavorite
+      })
+    }
+  }
+  async handleFormSubmission(form: NgForm) {
+    console.log(form,this.idContacto() )
     const nuevoContacto: NewContactT = {
-      firstName: form.firstName,
-      lastName: form.lastName,
-      adress: form.adress,
-      email: form.email,
-      image: form.image,
-      number: form.number,
-      company: form.company,
-      isFavourite: form.isFavourite
-    };
+      firstName: form.value.firstName,
+      lastName: form.value.lastName,
+      address: form.value.address,
+      email: form.value.email,
+      image: form.value.image,
+      number: form.value.number,
+      company: form.value.company,
+      isFavorite: form.value.isFavorite
+    }
+    let res;
+    if (this.idContacto()) {
+      res = await this.contactService.editContact({ ...nuevoContacto, id: this.idContacto()!.toString() })
+    } else {
+      res = await this.contactService.createContact(nuevoContacto)
+    }
+    this.router.navigate(["/"])
+
 
     if (await this.contactService.createContact(nuevoContacto)) {
       console.log("AAAAAAA");
-      this.router.navigate(['/contacts']);
+      this.router.navigate(['']);
     } else {
       this.contactoCreado = false;
     }
