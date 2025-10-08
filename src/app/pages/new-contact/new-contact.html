@@ -45,7 +45,6 @@
             </div>
             <div>
                 <label>Grupos</label>
-                <!-- Aquí puedes agregar un input si lo necesitas -->
             </div>
             <div>
                 <label for="company">Compañía</label>
@@ -63,10 +62,15 @@
                 <input id="favorite" name="favorite" type="checkbox" ngModel>
             </div>
             <button [disabled]="newContactForm.invalid" routerLink="/contacts">+</button>
+            @if (isLoading) {
+            <app-spinner></app-spinner>
+            }
             <p class="error">{{newContactForm.valid}}</p>
             <p class="error" [class.visible]="!contactoCreado">
                 Ocurrió un error al crear el contacto, intente de nuevo.
             </p>
+
+
         </form>
     </div>
 </div>

@@ -9,4 +9,8 @@ import { Contact } from '../../interfaces/contact';
 })
 export class ContactListItem {
   contact = input.required<Contact>()
+
+  openDeleteModal(){
+    
+  }
 }

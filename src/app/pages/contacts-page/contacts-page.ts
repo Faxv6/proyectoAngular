@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from "@angular/router";
-import { ContactListItem } from '../../components/contact-list-item/contact-list-item';
 import { Contact } from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -26,13 +26,22 @@ export class ContactsPage implements OnInit {
   contactService = inject(ContactsService)
 
   contactos: Contact[] = []
+  deleteContactModal() {
 
-  /*async deletingContact(form: { email: string, password: string }) {
+    Swal.fire({
+      title: "¿Querés borrar el contacto?",
+      showDenyButton: true,
+      showCancelButton: true,
+      denyButtonText: `Borrar`,
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  }
 
-    this.isLoading = true;
-    await this.contactService.deleteContact();
-    this.isLoading = false;
-  }*/
-
-    
 }
