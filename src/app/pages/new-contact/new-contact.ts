@@ -57,14 +57,18 @@ export class NewContactComponent implements OnInit {
       res = await this.contactService.createContact(nuevoContacto)
     }
     this.isLoading = false;
-    this.router.navigate(["/"])
 
+    if (res) {
+      this.router.navigate(["/contacts"]);
+    } else {
+      this.contactoCreado = false;
+    }
 
     if (await this.contactService.createContact(nuevoContacto)) {
-      console.log("AAAAAAA");
       this.router.navigate(['']);
     } else {
       this.contactoCreado = false;
     }
   }
 }
+
