@@ -24,7 +24,6 @@
                 <td>{{ contacto.company || '-' }}</td>
                 <td>
                     <button class="action-btn" (click)="deleteContactModal(contacto.id)">🗑️</button>
-                    <!--Acá va a ir la logica para el spinner cuando quiero borrar el cntacto-->
                     <button class="action-btn" [routerLink]="['/contact-details', contacto.id]">👁️</button>
                     <button class="action-btn" [routerLink]="['/edit-contact', contacto.id, 'edit']">✏️</button>
                 </td>

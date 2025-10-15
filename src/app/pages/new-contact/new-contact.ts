@@ -2,7 +2,7 @@ import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Contact, NewContactT } from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
-import { ActivatedRoute, Router } from '@angular/router'; // ⬅️ Agrega ActivatedRoute
+import { ActivatedRoute, Router } from '@angular/router';
 import { Spinner } from '../../components/spinner/spinner';
 
 @Component({
@@ -14,37 +14,32 @@ import { Spinner } from '../../components/spinner/spinner';
 export class NewEditContact implements OnInit {
   contactsService = inject(ContactsService);
   router = inject(Router);
-  route = inject(ActivatedRoute); // ⬅️ Inyecta ActivatedRoute
+  route = inject(ActivatedRoute);
   errorEnBack = false;
 
-  // Cambia esto:
-  idContacto: string | null = null; // ⬅️ En lugar de input<number>()
+  idContacto: string | null = null;
 
   contactoOriginal: Contact | undefined = undefined;
   form = viewChild<NgForm>('newContactForm');
   isLoading = false;
-  isEditMode = false; // ⬅️ Nueva propiedad
+  isEditMode = false;
 
   async ngOnInit() {
-    // Captura el ID de la ruta
     this.idContacto = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.idContacto;
 
     console.log('ID capturado:', this.idContacto, 'Modo edición:', this.isEditMode);
 
     if (this.isEditMode && this.idContacto) {
-      // Cargar el contacto desde la API
       this.contactoOriginal = await this.contactsService.getContactById(this.idContacto);
 
       console.log('Contacto cargado:', this.contactoOriginal);
 
-      // Pre-llenar formulario con setTimeout más largo
       setTimeout(() => {
         if (this.contactoOriginal && this.form()) {
           console.log('Llenando formulario...');
 
-          // Usa patchValue en lugar de setValue (es más flexible)
-          this.form()?.form.patchValue({
+          this.form()?.form.setValue({
             firstName: this.contactoOriginal.firstName || '',
             lastName: this.contactoOriginal.lastName || '',
             number: this.contactoOriginal.number || '',
@@ -54,10 +49,8 @@ export class NewEditContact implements OnInit {
             company: this.contactoOriginal.company || '',
             image: this.contactoOriginal.image || ''
           });
-
-          console.log('Formulario llenado con valores:', this.form()?.form.value);
         }
-      }, 200); // Aumenté el timeout
+      }, 200);
     }
   }
   async handleFormSubmission(form: NgForm) {
@@ -70,11 +63,10 @@ export class NewEditContact implements OnInit {
       image: form.value.image,
       number: form.value.number,
       company: form.value.company,
-      isFavorite: form.value.isFavourite // ⬅️ Cambiado a isFavourite (como está en tu HTML)
+      isFavorite: form.value.isFavourite
     }
 
-    this.isLoading = true; // ⬅️ Activa el loading
-
+    this.isLoading = true;
     let res;
     if (this.isEditMode && this.idContacto) {
       res = await this.contactsService.editContact({ ...nuevoContacto, id: this.idContacto });
@@ -82,13 +74,13 @@ export class NewEditContact implements OnInit {
       res = await this.contactsService.createContact(nuevoContacto);
     }
 
-    this.isLoading = false; // ⬅️ Desactiva el loading
+    this.isLoading = false; 
 
     if (!res) {
       this.errorEnBack = true;
       return;
     }
 
-    this.router.navigate([""]); 
+    this.router.navigate([""]);
   }
 }

@@ -36,7 +36,6 @@ export class ContactsPage implements OnInit {
       denyButtonText: `Borrar`,
       cancelButtonText: "Cancelar"
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isDenied) {
         this.contactService.deleteContact(id)
         Swal.fire("Usuario eliminado");
