@@ -70,25 +70,25 @@ export class NewEditContact implements OnInit {
       image: form.value.image,
       number: form.value.number,
       company: form.value.company,
-      isFavorite: form.value.favorite // ⬅️ Cambia a "favorite"
+      isFavorite: form.value.isFavourite // ⬅️ Cambiado a isFavourite (como está en tu HTML)
     }
 
-    this.isLoading = true;
-    let res;
+    this.isLoading = true; // ⬅️ Activa el loading
 
+    let res;
     if (this.isEditMode && this.idContacto) {
       res = await this.contactsService.editContact({ ...nuevoContacto, id: this.idContacto });
     } else {
       res = await this.contactsService.createContact(nuevoContacto);
     }
 
-    this.isLoading = false;
+    this.isLoading = false; // ⬅️ Desactiva el loading
 
     if (!res) {
       this.errorEnBack = true;
       return;
     }
 
-    this.router.navigate([""]);
+    this.router.navigate([""]); 
   }
 }

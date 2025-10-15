@@ -9,7 +9,7 @@
     margin: 0;
     position: relative;
     overflow-x: hidden;
-    
+
     &::before {
         content: '';
         position: absolute;
@@ -18,14 +18,21 @@
         width: 100%;
         height: 100%;
         background: radial-gradient(circle at 20% 50%, rgba(0, 124, 240, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(0, 223, 216, 0.1) 0%, transparent 50%);
+            radial-gradient(circle at 80% 20%, rgba(0, 223, 216, 0.1) 0%, transparent 50%);
         animation: float 6s ease-in-out infinite;
     }
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .card {
@@ -41,7 +48,7 @@
     position: relative;
     z-index: 2;
     transition: transform 0.3s ease;
-    
+
     &:hover {
         transform: translateY(-3px);
     }
@@ -91,7 +98,7 @@ input[type="number"] {
     color: #fff;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    
+
     &:focus {
         outline: none;
         border-color: #00dfd8;
@@ -109,10 +116,10 @@ input[type="checkbox"] {
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
-    
+
     &:checked {
         background: #00dfd8;
-        
+
         &::before {
             content: '✓';
             position: absolute;
@@ -137,12 +144,12 @@ input[type="checkbox"] {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 0.5rem;
-    
+
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
     }
-    
+
     &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -161,12 +168,12 @@ input[type="checkbox"] {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 0.5rem;
-    
+
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(0, 124, 240, 0.3);
     }
-    
+
     &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -190,8 +197,63 @@ input[type="checkbox"] {
         padding: 1.2rem;
         max-width: 95%;
     }
-    
+
     h2 {
         font-size: 1.5rem;
     }
+}
+
+// ...tus estilos existentes...
+
+// Overlay de loading
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(24, 24, 24, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    z-index: 10;
+    gap: 1rem;
+}
+
+.loading-text {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+// Campos deshabilitados durante loading
+input:disabled,
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+// Spinner personalizado para que combine con tu diseño
+.card .loader {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #00dfd8;
+    width: 40px;
+    height: 40px;
 }
