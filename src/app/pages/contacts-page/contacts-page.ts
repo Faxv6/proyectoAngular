@@ -26,21 +26,21 @@ export class ContactsPage implements OnInit {
   contactService = inject(ContactsService)
 
   contactos: Contact[] = []
-  deleteContactModal() {
+  deleteContactModal(id: string | number) {
 
     Swal.fire({
       title: "¿Querés borrar el contacto?",
+      showConfirmButton: false,
       showDenyButton: true,
       showCancelButton: true,
       denyButtonText: `Borrar`,
       cancelButtonText: "Cancelar"
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
-      }
+      if (result.isDenied) {
+        this.contactService.deleteContact(id)
+        Swal.fire("Usuario eliminado");
+      } 
     });
   }
 

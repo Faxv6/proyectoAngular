@@ -8,19 +8,22 @@
                 <th>Grupos</th>
                 <th>Acciones</th>
                 <th style="text-align:right;">
-                    <button class="add-contact-btn" routerLink="/new-contact" >+ Nuevo contacto</button>
+                    <button class="add-contact-btn" routerLink="/new-contact">+ Nuevo contacto</button>
                 </th>
             </tr>
         </thead>
         <tbody>
             @for (contacto of contactService.contacts; track $index) {
             <tr>
-                <td>{{ contacto.firstName }} {{ contacto.lastName }}</td>
+                <td>
+                    <span [class.favorite-name]="contacto.isFavorite">
+                        {{ contacto.firstName }} {{ contacto.lastName }}
+                    </span>
                 <td>{{ contacto.number }}</td>
                 <td>{{ contacto.email }}</td>
                 <td>{{ contacto.company || '-' }}</td>
                 <td>
-                    <button class="action-btn" (click)="contactService.deleteContact(contacto.id)">🗑️</button>
+                    <button class="action-btn" (click)="deleteContactModal(contacto.id)">🗑️</button>
                     <!--Acá va a ir la logica para el spinner cuando quiero borrar el cntacto-->
                     <button class="action-btn" [routerLink]="['/contact-details', contacto.id]">👁️</button>
                     <button class="action-btn" [routerLink]="['/edit-contact', contacto.id, 'edit']">✏️</button>

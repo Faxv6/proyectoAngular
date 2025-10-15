@@ -1,6 +1,6 @@
 <section class="login-section">
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.form.value)" class="flex-column form">
-        <img src="/logo-buggati.png" alt="logo" width="220" height="250">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="flex-column form"> <img src="/logo-buggati.png"
+            alt="logo" width="220" height="250">
         <div>
             <input id="email" name="email" type="email" id="email" placeholder="Email" class="input input-text" ngModel
                 #email="ngModel" required="true" autocomplete="email">
@@ -19,7 +19,7 @@
             Iniciar sesión
         </button>
         @if (isLoading) {
-            <app-spinner></app-spinner>
+        <app-spinner></app-spinner>
         }
 
         @if (errorLogin) {

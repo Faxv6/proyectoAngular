@@ -1,44 +1,82 @@
 .new-contact-page-bg {
-    height: 100vh; 
+    min-height: 100vh;
     width: 100vw;
-    background: linear-gradient(120deg, #181818 60%, #007cf0 100%);
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #007cf0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 1rem;
     margin: 0;
-}
-.form-container {
-    max-width: 500px;
-    background: #181818;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 1;
+    position: relative;
+    overflow-x: hidden;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 50%, rgba(0, 124, 240, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(0, 223, 216, 0.1) 0%, transparent 50%);
+        animation: float 6s ease-in-out infinite;
+    }
 }
 
-.form-container {
-    max-width: 500px;
-    background: #181818;
-    border-radius: 20px;
-    padding: 2.5rem 2.5rem 2rem 2rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.card {
+    background: rgba(24, 24, 24, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 223, 216, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    color: #fff;
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-3px);
+    }
+}
+
+h2 {
+    color: transparent;
+    background: linear-gradient(135deg, #00dfd8, #007cf0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 1rem;
+}
+
+div {
+    position: relative;
 }
 
 label {
-    color: #fff;
+    color: #e2e8f0;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 input[type="text"],
@@ -46,68 +84,114 @@ input[type="email"],
 input[type="url"],
 input[type="number"] {
     width: 100%;
-    padding: 0.5em 1.2em;
-    border: none;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    background: #232323;
+    background: rgba(35, 35, 35, 0.8);
     color: #fff;
-    font-size: 1rem;
-    margin-top: 0.2rem;
-    transition: box-shadow 0.2s, border 0.2s;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="number"]:focus {
-    outline: none;
-    border: 1.5px solid #00dfd8;
-    box-shadow: 0 0 0 2px #007cf033;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    
+    &:focus {
+        outline: none;
+        border-color: #00dfd8;
+        box-shadow: 0 0 0 2px rgba(0, 223, 216, 0.2);
+    }
 }
 
 input[type="checkbox"] {
-    accent-color: #00dfd8;
-    margin-left: 0.5em;
-    transform: scale(1.2);
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #00dfd8;
+    border-radius: 4px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:checked {
+        background: #00dfd8;
+        
+        &::before {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
 }
 
-button[type="submit"] {
-    background: linear-gradient(90deg, #007cf0, #00dfd8);
-    background-size: 200% 100%;
-    background-position: left;
+.btn-create {
+    background: linear-gradient(90deg, #28a745, #20c997);
     color: #fff;
     border: none;
-    padding: 0.7em 1.5em;
+    padding: 0.8rem 1.5rem;
     border-radius: 8px;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background-position 0.4s, opacity 0.2s;
-    margin-top: 1.2rem;
-    align-self: flex-end;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+    }
+    
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
 }
 
-button[type="submit"]:hover {
-    background-position: right;
+.btn-edit {
+    background: linear-gradient(90deg, #007cf0, #00dfd8);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 124, 240, 0.3);
+    }
+    
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
 }
 
 .error {
-    display: none;
-    color: #ff4d4f;
-    font-size: 0.95em;
-    margin-top: 0.3em;
-    font-weight: 500;
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 107, 107, 0.1);
+    border-left: 2px solid #ff6b6b;
+    border-radius: 0 4px 4px 0;
 }
-.error.visible {
-    display: block;
-}
-small {
-    color: #ffb84d;
-    font-size: 0.92em;
-    margin-left: 0.2em;
-    display: block;
-    margin-top: 0.2em;
-}
-h2{
-    color: white;
+
+// Responsive
+@media (max-width: 768px) {
+    .card {
+        padding: 1.2rem;
+        max-width: 95%;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
 }

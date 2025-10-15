@@ -1,1 +1,52 @@
-<p>detalles de contacto!</p>
+<div class="contact-details-container">
+    <div class="contact-card">
+        @if(cargandoContacto) {
+        <div class="loading-state">
+            <p>Cargando contacto...</p>
+        </div>
+        } @else if(!contacto) {
+        <div class="error-state">
+            <p>No se encontró el contacto</p>
+            <button class="btn-secondary" routerLink="/contacts">Volver a contactos</button>
+        </div>
+        } @else {
+        <div class="contact-header">
+            <div class="contact-info">
+                <h1>{{contacto.firstName}} {{contacto.lastName}}</h1>
+                <div class="contact-details">
+                    <div class="detail-item">
+                        <span class="label">Email:</span>
+                        <span class="value">{{contacto.email}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Teléfono:</span>
+                        <span class="value">{{contacto.number}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Compañía:</span>
+                        <span class="value">{{contacto.company || 'Sin compañía'}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Dirección:</span>
+                        <span class="value">{{contacto.address || 'Sin dirección'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="favorite-section">
+                @if (contacto.isFavorite) {
+                <p class="favorite-star">⭐</p>
+                <button class="btn-favorite active" (click)="toggleFavorite()">Desmarcar favorito</button>
+                } @else {
+                <button class="btn-favorite" (click)="toggleFavorite()">Marcar como favorito</button>
+                }
+            </div>
+        </div>
+
+        <div class="actions-section">
+            <button class="btn-secondary" routerLink="">
+                ← Volver a contactos
+            </button>
+        </div>
+        }
+    </div>
+</div>
