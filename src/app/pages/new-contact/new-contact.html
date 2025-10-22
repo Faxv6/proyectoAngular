@@ -10,63 +10,127 @@
             <div>
                 <label for="first-name">Nombre*</label>
                 <input id="first-name" name="firstName" type="text" ngModel required="true" minlength="2" maxlength="20"
-                    #firstName="ngModel" [disabled]="isLoading">
+                    #firstName="ngModel" [disabled]="isLoading" placeholder="Ingresa el nombre">
                 @if (firstName.dirty && firstName.invalid) {
-                <p class="error">El nombre es obligatorio y no puede ser una sola letra</p>
+                @if (firstName.errors?.['required']) {
+                <p class="error">El nombre es obligatorio</p>
+                } @else if (firstName.errors?.['minlength']) {
+                <p class="error">El nombre debe tener al menos 2 caracteres</p>
+                } @else if (firstName.errors?.['maxlength']) {
+                <p class="error">El nombre no puede exceder 20 caracteres</p>
+                }
                 }
             </div>
 
             <div>
                 <label for="last-name">Apellido</label>
-                <input id="last-name" name="lastName" type="text" ngModel maxlength="20" [disabled]="isLoading">
-            </div>
-
-            <div>
-                <label for="phone">Telefono*</label>
-                <input id="phone" name="number" type="text" ngModel required="true" minlength="3" maxlength="30"
-                    #phone="ngModel" [disabled]="isLoading">
-                @if (phone.dirty && phone.invalid) {
-                <p class="error">El teléfono es obligatorio (mínimo 3 caracteres)</p>
+                <input id="last-name" name="lastName" type="text" ngModel maxlength="20" [disabled]="isLoading"
+                    #lastName="ngModel" placeholder="Ingresa el apellido">
+                @if (lastName.dirty && lastName.invalid) {
+                @if (lastName.errors?.['maxlength']) {
+                <p class="error">El apellido no puede exceder 20 caracteres</p>
+                }
                 }
             </div>
 
             <div>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" ngModel maxlength="40" [disabled]="isLoading">
+                <label for="number">Teléfono*</label>
+                <input id="number" name="number" type="tel" ngModel required="true" minlength="8" maxlength="15"
+                    pattern="[0-9+\-\s()]*" #phone="ngModel" [disabled]="isLoading" placeholder="+54 9 11 1234-5678">
+                @if (phone.dirty && phone.invalid) {
+                @if (phone.errors?.['required']) {
+                <p class="error">El teléfono es obligatorio</p>
+                } @else if (phone.errors?.['minlength']) {
+                <p class="error">El teléfono debe tener al menos 8 caracteres</p>
+                } @else if (phone.errors?.['pattern']) {
+                <p class="error">Solo se permiten números, +, -, espacios y paréntesis</p>
+                }
+                }
             </div>
 
             <div>
-                <label for="favourite">Favorito</label>
-                <input id="favourite" name="isFavourite" type="checkbox" ngModel [disabled]="isLoading">
+                <label for="email">Email*</label>
+                <input id="email" name="email" type="email" ngModel required="true" maxlength="50" #email="ngModel"
+                    [disabled]="isLoading" placeholder="usuario@ejemplo.com">
+                @if (email.dirty && email.invalid) {
+                @if (email.errors?.['required']) {
+                <p class="error">El email es obligatorio</p>
+                } @else if (email.errors?.['email']) {
+                <p class="error">Debe ser un email válido (ej: usuario@ejemplo.com)</p>
+                } @else if (email.errors?.['maxlength']) {
+                <p class="error">El email no puede exceder 50 caracteres</p>
+                }
+                }
+            </div>
+
+            <div class="checkbox-container">
+                <label for="favourite">
+                    <input id="favourite" name="isFavourite" type="checkbox" ngModel [disabled]="isLoading">
+                    <span class="checkmark"></span>
+                    Marcar como favorito
+                </label>
             </div>
 
             <div>
-                <label for="address">Direccion</label>
-                <input id="address" name="address" type="text" ngModel minlength="5" [disabled]="isLoading">
+                <label for="address">Dirección</label>
+                <input id="address" name="address" type="text" ngModel minlength="10" maxlength="100" #address="ngModel"
+                    [disabled]="isLoading" placeholder="Calle 123, Ciudad, País">
+                @if (address.dirty && address.invalid) {
+                @if (address.errors?.['minlength']) {
+                <p class="error">La dirección debe tener al menos 10 caracteres</p>
+                } @else if (address.errors?.['maxlength']) {
+                <p class="error">La dirección no puede exceder 100 caracteres</p>
+                }
+                }
             </div>
 
             <div>
-                <label for="company">Companía</label>
-                <input id="company" name="company" type="text" ngModel minlength="2" [disabled]="isLoading">
+                <label for="company">Compañía</label>
+                <input id="company" name="company" type="text" ngModel minlength="2" maxlength="50" #company="ngModel"
+                    [disabled]="isLoading" placeholder="Nombre de la empresa">
+                @if (company.dirty && company.invalid) {
+                @if (company.errors?.['minlength']) {
+                <p class="error">La compañía debe tener al menos 2 caracteres</p>
+                } @else if (company.errors?.['maxlength']) {
+                <p class="error">La compañía no puede exceder 50 caracteres</p>
+                }
+                }
             </div>
 
             <div>
-                <label for="image">URL Imagen</label>
-                <input id="image" name="image" type="text" ngModel minlength="10" [disabled]="isLoading">
+                <label for="image">URL de Imagen</label>
+                <input id="image" name="image" type="url" ngModel pattern="https?://.+" #image="ngModel"
+                    [disabled]="isLoading" placeholder="https://ejemplo.com/imagen.jpg">
+                @if (image.dirty && image.invalid) {
+                @if (image.errors?.['pattern']) {
+                <p class="error">Debe ser una URL válida (http:// o https://)</p>
+                }
+                }
             </div>
 
             @if (errorEnBack) {
-            <p class="error">Error indeterminado, intente nuevamente.</p>
+            <p class="error">Error al {{ isEditMode ? 'actualizar' : 'crear' }} el contacto. Intente nuevamente.</p>
             }
 
-            <!-- Botón con spinner integrado -->
+            @if (newContactForm.invalid && newContactForm.dirty) {
+            <div class="validation-summary">
+                <p class="warning">⚠️ Por favor, completa todos los campos obligatorios correctamente:</p>
+                <ul>
+                    @if (firstName.invalid) { <li>Nombre válido</li> }
+                    @if (phone.invalid) { <li>Teléfono válido</li> }
+                    @if (email.invalid) { <li>Email válido</li> }
+                </ul>
+            </div>
+            }
+
+            <!-- Botón con validación -->
             @if(isEditMode){
             <button [disabled]="newContactForm.invalid || isLoading" class="btn-edit">
                 @if(isLoading) {
                 <app-spinner></app-spinner>
-                <span>Editando...</span>
+                <span>Actualizando...</span>
                 } @else {
-                <span>Editar</span>
+                <span>Actualizar contacto</span>
                 }
             </button>
             } @else {
@@ -75,10 +139,12 @@
                 <app-spinner></app-spinner>
                 <span>Creando...</span>
                 } @else {
-                <span>Crear</span>
+                <span>Crear contacto</span>
                 }
             </button>
             }
+
+            <p class="required-notice">* Campos obligatorios</p>
         </form>
     </div>
 </div>

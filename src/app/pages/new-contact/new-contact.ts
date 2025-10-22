@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { inject, viewChild } from '@angular/core';
 import { Contact, NewContactT } from '../../interfaces/contact';
 import { ContactsService } from '../../services/contacts-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,16 +29,13 @@ export class NewEditContact implements OnInit {
     this.idContacto = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.idContacto;
 
-    console.log('ID capturado:', this.idContacto, 'Modo edición:', this.isEditMode);
 
     if (this.isEditMode && this.idContacto) {
       this.contactoOriginal = await this.contactsService.getContactById(this.idContacto);
 
-      console.log('Contacto cargado:', this.contactoOriginal);
 
       setTimeout(() => {
         if (this.contactoOriginal && this.form()) {
-          console.log('Llenando formulario...');
 
           this.form()?.form.setValue({
             firstName: this.contactoOriginal.firstName || '',
@@ -63,9 +61,8 @@ export class NewEditContact implements OnInit {
       image: form.value.image,
       number: form.value.number,
       company: form.value.company,
-      isFavorite: form.value.isFavourite
+      isFavorite: form.value.isFavorite
     }
-
     this.isLoading = true;
     let res;
     if (this.isEditMode && this.idContacto) {
@@ -73,14 +70,11 @@ export class NewEditContact implements OnInit {
     } else {
       res = await this.contactsService.createContact(nuevoContacto);
     }
-
-    this.isLoading = false; 
-
+    this.isLoading = false;
     if (!res) {
       this.errorEnBack = true;
       return;
     }
-
     this.router.navigate([""]);
   }
 }

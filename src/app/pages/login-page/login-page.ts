@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Spinner } from "../../components/spinner/spinner";
-
 
 @Component({
   selector: 'app-login-page',
@@ -12,20 +11,33 @@ import { Spinner } from "../../components/spinner/spinner";
   styleUrl: './login-page.scss'
 })
 export class LoginPage {
-  errorLogin = false
-  authService = inject(AuthService)
+  errorLogin = false;
+  authService = inject(AuthService);
   isLoading = false;
 
   async login(form: { email: string, password: string }) {
-    console.log(form)
+    console.log(form);
     this.errorLogin = false;
+
     if (!form.email || !form.password) {
       this.errorLogin = true;
-      return
+      return;
     }
-    this.isLoading = true;
-    await this.authService.login(form);
-    this.isLoading = false;
-  }
 
+    this.isLoading = true;
+
+    try {
+      const result = await this.authService.login(form) as boolean | void;
+
+      if (result === false) {
+        this.errorLogin = true;
+      }
+
+    } catch (error) {
+      console.error('Error en login:', error);
+      this.errorLogin = true;
+    } finally {
+      this.isLoading = false;
+    }
+  }
 }
